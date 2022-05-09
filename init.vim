@@ -39,9 +39,10 @@ Plug 'tpope/vim-abolish'
 Plug 'mhinz/vim-startify'
 Plug 'adoy/vim-php-refactoring-toolbox'
 Plug 'beanworks/vim-phpfmt'
+Plug 'Asheq/close-buffers.vim'
 
 "Plug 'vim-syntastic/syntastic'
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 
 Plug 'phpactor/phpactor', {'for': 'php', 'tag': '*', 'do': 'composer install --no-dev -o'}
 Plug 'nvim-treesitter/nvim-treesitter'
@@ -58,6 +59,7 @@ Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'L3MON4D3/LuaSnip'
 
 Plug 'ray-x/lsp_signature.nvim'
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
  
 call plug#end()
 
@@ -68,6 +70,7 @@ set foldlevelstart=99
 let mapleader=" " 
 
 nnoremap <leader><CR> :source ~/.config/nvim/init.vim<CR>
+cnoremap w!! execute 'silent! write !SUDO_ASKPASS=`which ssh-askpass` sudo tee % >/dev/null' <bar> edit!
 
 " Remaps for window navigation
 nnoremap <leader>h <C-w>h
@@ -131,15 +134,6 @@ lua <<EOF
 require'nvim-treesitter.configs'.setup {
     highlight = {
         enable = true,
-        custom_captures = {
-            ["TStype"] = "GruvboxAqua", 
-            ["phpTStype"] = "GruvboxAqua", 
-            ["TStypeBuildin"] = "GruvboxAqua", 
-            ["TSMethod"] = "GruvboxGreen", 
-            ["TSFunction"] = "GruvboxGreen", 
-            ["phpTSFunction"] = "GruvboxGreen", 
-            ["phpTSMethod"] = "GruvboxGreen", 
-        },
         -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
         -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
         -- Using this option may slow down your editor, and you may see some duplicate highlights.
@@ -264,13 +258,25 @@ end
 require'lsp_signature'.setup(cfg) -- no need to specify bufnr if you don't use toggle_key
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = {'phpactor','solargraph','tsserver'}
+
+
+lspconfig.intelephense.setup({
+    settings = {
+        intelephense = {
+            files = {
+                maxSize = 5000000;
+            };
+        };
+    }
+});
+local servers = {'phpactor','solargraph','tsserver','vuels'}
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
     capabilities = capabilities,
   }
 end
+
 
 vim.g.markdown_fenced_languages = {
   "ts=typescript"
