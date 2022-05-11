@@ -55,6 +55,10 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 
+Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+
+Plug 'onsails/lspkind-nvim'
+
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'L3MON4D3/LuaSnip'
 
@@ -129,6 +133,7 @@ hi! link TSMethod GruvboxYellow
 hi! link TSFunction GruvboxYellow
 hi! link phpTSMethod GruvboxYellow
 hi! link phpTSFunction GruvboxYellow
+
 " Treesitter
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
@@ -296,6 +301,8 @@ local luasnip = require 'luasnip'
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
+local lspkind = require('lspkind')
+
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -333,7 +340,20 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
     { name = 'buffer' },
+    { name = 'cmp_tabnine' },
   },
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol', -- show only symbol annotations
+      maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+
+      -- The function below will be called before any actual modifications from lspkind
+      -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+      before = function (entry, vim_item)
+        return vim_item
+      end
+    })
+  }
 }
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
@@ -351,6 +371,21 @@ cmp.setup.cmdline(':', {
   { name = 'cmdline' }
   })
 })
+
+local tabnine = require('cmp_tabnine.config')
+tabnine:setup({
+	max_lines = 1000;
+	max_num_results = 20;
+	sort = true;
+	run_on_every_keystroke = true;
+	snippet_placeholder = '..';
+	ignored_file_types = { -- default is not to ignore
+		-- uncomment to ignore in lua:
+		-- lua = true
+	};
+	show_prediction_strength = true;
+})
+
 EOF
 
 " Ale config
