@@ -12,6 +12,8 @@
 (class_interface_clause (name) @phpTStype)
 (namespace_aliasing_clause (name) @phpTStype)
 
+(namespace_name_as_prefix) @TSNamespace 
+
 ; Visibility = GruvboxYellow
 (visibility_modifier) @GruvboxPurple
 "public" @GruvboxPurple 
