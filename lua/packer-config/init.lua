@@ -27,6 +27,8 @@ return require('packer').startup(function()
     use 'tpope/vim-surround'
     use 'tpope/vim-abolish'
 
+    use 'vim-test/vim-test'
+
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
@@ -58,7 +60,8 @@ return require('packer').startup(function()
     use 'neovim/nvim-lspconfig' -- enable LSP
     use 'williamboman/nvim-lsp-installer'
     use 'jose-elias-alvarez/null-ls.nvim' -- for formatters and linters
-    use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
+    -- use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
+    use 'phpactor/phpactor'
 
     -- CMP Completion
     use 'hrsh7th/cmp-nvim-lsp'
@@ -71,6 +74,7 @@ return require('packer').startup(function()
     -- Spippets
     use 'L3MON4D3/LuaSnip'
     use 'saadparwaiz1/cmp_luasnip'
+    use "rafamadriz/friendly-snippets"
 
     use {
         'numToStr/Comment.nvim',
@@ -81,4 +85,24 @@ return require('packer').startup(function()
 
     use 'onsails/lspkind.nvim'
 
+    use {
+        "nvim-neotest/neotest",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "antoinemadec/FixCursorHold.nvim",
+            "olimorris/neotest-phpunit",
+        },
+        config = function()
+            require('neotest').setup({
+                adapters = {
+                    require('neotest-phpunit')({
+                        phpunit_cmd = function()
+                            return "run test"
+                        end
+                    }),
+                }
+            })
+        end
+    }
 end)

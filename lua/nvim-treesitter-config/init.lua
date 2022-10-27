@@ -3,6 +3,8 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = {
       "javascript",
       "php",
+      "go",
+      "gomod",
       "phpdoc",
       "vue",
       "ruby",

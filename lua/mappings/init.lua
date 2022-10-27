@@ -3,9 +3,24 @@ local opts = { noremap = true, silent = true }
 
 vim.g.mapleader = ' '
 
+-- Insert -> sign
+map('i', '>>', '->', opts)
+-- Insert => sign
+map('i', '>.', '=>', opts)
 
 map('i', 'jj', '<ESC>', opts)
-map('i', ';;', '<END>;<ESC>', opts)
+
+-- Double ';' puts semicolon in the end of line
+map('i', ';;', '<ESC>mxi<END>;<ESC>`xa', opts)
+map('n', ';;', 'mxi<END>;<ESC>`x', opts)
+
+-- Double ',' puts comma in the end of line
+map('i', ',,', '<ESC>mxi<END>,<ESC>`xa', opts)
+map('n', ',,', 'mxi<END>,<ESC>`x', opts)
+
+-- Uppercase current word
+map('i', '<C-u>', '<ESC>mxviwU`xa', opts)
+map('i', '<C-d>', '<ESC>mxviwu`xa', opts)
 
 -- Remaps for window navigation
 map('n', '<leader>h', '<C-w>h', opts)
@@ -31,7 +46,7 @@ map('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', opts)
 map("n", "n", "nzzzv", opts)
 map("n", "N", "Nzzzv", opts)
 
--- Clear matches with Ctrl+l
+-- Clear matches with Ctrl+c
 map("n", "<C-c>", ":noh<Cr>", opts)
 
 -- Reselect visual block after indent/outdent
@@ -41,4 +56,3 @@ map("v", ">", ">gv", opts)
 -- Move line up and down with J/K
 map("x", "J", ":move '>+1<CR>gv-gv", opts)
 map("x", "K", ":move '<-2<CR>gv-gv", opts)
-

@@ -1,4 +1,5 @@
 require'nvim-tree'.setup {
+    auto_reload_on_write = true,
     diagnostics = {
         enable = true,
     },
@@ -9,5 +10,10 @@ require'nvim-tree'.setup {
         open_file = {
             resize_window = true,
         }
+    },
+    git = {
+        enable = true,
+        ignore = false,
+        timeout = 400,
     }
 }

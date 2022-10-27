@@ -27,7 +27,6 @@ null_ls.setup({
         null_ls.builtins.formatting.phpcbf, -- Php code standart formatter
         null_ls.builtins.formatting.phpcsfixer, -- Php code standart formatter
         null_ls.builtins.formatting.prettier, -- Code standart formatter
-        null_ls.builtins.diagnostics.phpstan, -- Php syntax analysis
 
         null_ls.builtins.hover.dictionary, -- Shows defenitions of current word
     }

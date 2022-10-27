@@ -41,7 +41,7 @@ cmp.setup {
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'buffer' },
-        { name = 'cmp_tabnine' },
+        -- { name = 'cmp_tabnine' },
         { name = 'nvim_lsp_signature_help' },
     },
     formatting = {
@@ -52,7 +52,7 @@ cmp.setup {
                 buffer = "[Buf]",
                 nvim_lsp = "[Lsp]",
                 luasnip = "[Snip]",
-                cmp_tabnine = "[TN]",
+                -- cmp_tabnine = "[TN]",
                 nvim_lua = "[Lua]",
                 latex_symbols = "[Lat]",
             },
@@ -66,19 +66,19 @@ cmp.setup {
 }
 
 -- Tabnine setup
-local tabnine = require('cmp_tabnine.config')
-tabnine:setup({
-    max_lines = 1000;
-    max_num_results = 20;
-    sort = true;
-    run_on_every_keystroke = true;
-    snippet_placeholder = '__';
-    ignored_file_types = { -- default is not to ignore
-        -- uncomment to ignore in lua:
-        -- lua = true
-    };
-    show_prediction_strength = true;
-})
+-- local tabnine = require('cmp_tabnine.config')
+-- tabnine:setup({
+--     max_lines = 1000;
+--     max_num_results = 20;
+--     sort = true;
+--     run_on_every_keystroke = true;
+--     snippet_placeholder = '__';
+--     ignored_file_types = { -- default is not to ignore
+--         -- uncomment to ignore in lua:
+--         -- lua = true
+--     };
+--     show_prediction_strength = true;
+-- })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
@@ -97,3 +97,33 @@ cmp.setup.cmdline(':', {
         { name = 'cmdline' }
     })
 })
+
+-- Load snippets form plugin
+require("luasnip.loaders.from_vscode").lazy_load()
+
+-- Load snippets custom snippets
+require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets"})
+
+luasnip.config.set_config {
+    history = true,
+    updateevents = "TextChanged,TextChangedI",
+    enable_autosnippents = true,
+    ext_opts = {
+        [require("luasnip.util.types").choiceNode] = {
+            active = {
+                virt_text = { {"●", "GruvboxOrange"}}
+            },
+        },
+    },
+}
+
+vim.keymap.set({ "i", "s" }, "<C-l>", function()
+  if luasnip.choice_active() then
+    luasnip.change_choice(1)
+  end
+end)
+vim.keymap.set({ "i", "s" }, "<C-h>", function()
+  if luasnip.choice_active() then
+ luasnip.change_choice(-1)
+ end
+end)
