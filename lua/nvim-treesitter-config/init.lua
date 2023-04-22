@@ -32,3 +32,5 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+
+vim.api.nvim_set_hl(0, "@type.qualifier.php", { link = "GruvboxPurple" })

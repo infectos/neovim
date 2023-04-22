@@ -86,6 +86,13 @@ return require('packer').startup(function()
     use 'onsails/lspkind.nvim'
 
     use {
+        "ThePrimeagen/harpoon",
+        requires = {
+            "nvim-lua/plenary.nvim"
+        }
+    }
+
+    use {
         "nvim-neotest/neotest",
         requires = {
             "nvim-lua/plenary.nvim",
@@ -105,4 +112,11 @@ return require('packer').startup(function()
             })
         end
     }
+
+    use 'lambdalisue/suda.vim'
+
+    use({
+        'Wansmer/treesj',
+        requires = { 'nvim-treesitter'}
+    })
 end)

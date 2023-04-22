@@ -56,3 +56,9 @@ map("v", ">", ">gv", opts)
 -- Move line up and down with J/K
 map("x", "J", ":move '>+1<CR>gv-gv", opts)
 map("x", "K", ":move '<-2<CR>gv-gv", opts)
+
+-- Harpoon --
+map('n', "<leader>ha", "<cmd>lua require('harpoon.mark').add_file()<CR>", opts)
+map('n', "<leader>hm", "<cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>", opts)
+
+map('n', '<leader>fr', "<cmd>lua require('telescope.builtin').lsp_references()<CR>", opts)

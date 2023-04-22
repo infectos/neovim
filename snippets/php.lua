@@ -12,7 +12,7 @@ local fmt = require("luasnip.extras.fmt").fmt
 local rep = require("luasnip.extras").rep
 
 local methodSnippet = s("method", fmt([[
-{} function {}({}): {}
+{} function {}({})
 {{
     {}
 }}
@@ -20,8 +20,7 @@ local methodSnippet = s("method", fmt([[
         c(1, { t("public"), t("private"), t("protected")}),
         i(2, "functionName"),
         i(3, ""),
-        i(4, "void"),
-        i(5, "// TODO: write something"),
+        i(4, "// TODO: write something"),
 }))
 
 ls.add_snippets("php", {methodSnippet})
